@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fibonacci</title>
+</head>
+<body>
+    <form id = myForm action = "fibonacci.php" method = "post">
+        Fibonacci iterations: <input type="number" min="1" max="25" name="fiboName" id="fiboId">
+        <input type="submit" value="Submit">
+    </form>
+</body>
+
+<script type="text/javascript">
+    var form = document.getElementById("myform");
+
+    document.getElementById("fiboId").addEventListener("click", function () {
+        form.submit();
+    });
+</script>
+
+</html>
