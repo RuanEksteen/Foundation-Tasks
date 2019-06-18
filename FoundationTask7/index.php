@@ -1,13 +1,8 @@
 <?php
 include 'person.class.php';
 $personClassObj = new person();
-$startTime = microtime(true);
 $connObj = $personClassObj->OpenCon();
-$personClassObj->loadAllPeople($connObj);
-$personClassObj->CloseCon($connObj);
-$endTime = microtime(true);
-$executionTime = ($endTime - $startTime);
-echo "Execution time of script = ".$executionTime." sec <br> ";
+//$personClassObj->loadAllPeople($connObj);
 ?>
 <!DOCTYPE html>
 <html>
@@ -59,11 +54,20 @@ echo "Execution time of script = ".$executionTime." sec <br> ";
     </style>
 </head>
 <body>
-<button type='button' class='addBtn'>Add 1 user</button>
-<button type='button' class='addRandomBtn'>Add 10 Random users</button>
-<button type='button' class='deleteAllBtn'>Delete all Entries</button>
-<div id="tableDiv">
+<div style="width: 100%; overflow: hidden;">
+    <div style="width: 57%; float: left;">
+        <?php $personClassObj->loadAllPeople($connObj);?>
+    </div>
+    <div style="margin-left: 800px;">
+        <button type='button' class='addBtn'>Add A user</button>
+        <button type='button' class='addRandomBtn'>Add 10 users</button>
+        <button type='button' class='deleteAllBtn'>Delete all Entries</button>
+        <div id="tableDiv">
+        </div>
+    </div>
 </div>
+
+
 </body>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -71,7 +75,7 @@ echo "Execution time of script = ".$executionTime." sec <br> ";
   $(".dltBtn").on("click",function (event) {
       let btnElement = $(this);
       let id = btnElement.closest("tr").attr("id");
-      let btnId = 2;
+      let btnId = "DeleteBtn";
       console.log("clicked update",btnElement.closest("tr").attr("id"));
       $.post( "update.php", {id : id, btnId : btnId}, function( data ) {
           $( "#tableDiv" ).html( data );
@@ -79,17 +83,19 @@ echo "Execution time of script = ".$executionTime." sec <br> ";
       location.reload();
   });
   $(".updBtn").on("click", function (event) {
+      $("html").animate({ scrollTop: 0 }, "slow");
       let btnElement = $(this);
       let id = btnElement.closest("tr").attr("id");
-      let btnId = 1;
+      let btnId = "EditBtn";
       console.log("clicked update",btnElement.closest("tr").attr("id"));
       $.post( "update.php", {id : id, btnId : btnId}, function( data ) {
           $( "#tableDiv" ).html( data );
+          $('#customers').DataTable().ajax.reload();
       });
   });
   $(document).on("click",".submitBtn",function (event) {
       event.preventDefault();
-      let btnId = 3;
+      let btnId = "SubmitBtn";
       let id = $("#id").val();
       let name = $("#firstname").val();
       let surname = $("#lastname").val();
@@ -101,25 +107,26 @@ echo "Execution time of script = ".$executionTime." sec <br> ";
       });
   });
   $(".addRandomBtn").on("click", function (event) {
-      let btnId = 4;
+      let btnId = "AddRandomBtn";
       console.log("clicked add 10");
       $.post( "update.php", {btnId : btnId}, function( data ) {
           $( "#tableDiv" ).html( data );
       });
   });
   $(".deleteAllBtn").on("click", function (event) {
-      let btnId = 5;
+      let btnId = "DeleteAllBtn";
       console.log("clicked delete all");
       $.post( "update.php", {btnId : btnId}, function( data ) {
           $( "#tableDiv" ).html( data );
       });
   });
   $(".addBtn").on("click", function (event) {
-      let btnId = 6;
+      let btnId = "AddBtn";
       console.log("clicked delete all");
       $.post( "update.php", {btnId : btnId}, function( data ) {
           $( "#tableDiv" ).html( data );
       });
   });
 </script>
+<?php $personClassObj->CloseCon($connObj); ?>
 </html>

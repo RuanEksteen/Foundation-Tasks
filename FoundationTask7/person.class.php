@@ -40,7 +40,7 @@ class person
         $resultStr = $connObj->query($sqlStr);
 
         echo "<table id='customers'>";
-        echo "<tr><th>Name</th><th>Surname</th><th>Date Of Birth</th><th>Email</th><th>Age</th></tr>";
+        echo "<tr><th>Name</th><th>Surname</th><th>Date Of Birth</th><th>Email</th><th>Age</th><th>Action</th></tr>";
         while ($rowArr = mysqli_fetch_array($resultStr)) {
             echo "<tr id=" . $rowArr['id'] ."><td>" . $rowArr['Name'] . "</td><td>" . $rowArr['Surname'] . "</td><td>" . $rowArr['DateOfBirth'] . "</td><td>"
                 . $rowArr['EmailAddress']. "</td><td>" . $rowArr['Age'] . "</td><td><button type='button' class='updBtn'>Update</button>

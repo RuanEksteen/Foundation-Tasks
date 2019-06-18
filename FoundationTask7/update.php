@@ -2,13 +2,13 @@
 include 'person.class.php';
 $personClassObj = new person();
 $connObj = $personClassObj->OpenCon();
-if($_POST['btnId']== 1) {
+if($_POST['btnId']== "EditBtn") {
     $id = $_POST['id'];
     $personClassObj->loadPerson($connObj, $id);
-} elseif ($_POST['btnId']== 2) {
+} elseif ($_POST['btnId']== "DeleteBtn") {
     $id = $_POST['id'];
     $personClassObj->deletePerson($connObj, $id);
-} elseif ($_POST['btnId']== 3) {
+} elseif ($_POST['btnId']== "SubmitBtn") {
     if (!empty($_POST['name']) && !empty($_POST['surname']) && !empty($_POST['DateOfBirth']) && !empty($_POST['email'])/*&& !empty($_POST['age'])*/) {
         $id = $_POST['id'];
         $name = $_POST['name'];
@@ -31,11 +31,11 @@ if($_POST['btnId']== 1) {
     } else {
         echo "Please ensure that all fields are filled in";
     }
-} elseif ($_POST['btnId']== 4) {
+} elseif ($_POST['btnId']== "AddRandomBtn") {
     $personClassObj->addRandomTen($connObj);
-} elseif ($_POST['btnId']== 5) {
+} elseif ($_POST['btnId']== "DeleteAllBtn") {
     $personClassObj->deleteAllPeople($connObj);
-}elseif ($_POST['btnId']== 6) {
+}elseif ($_POST['btnId']== "AddBtn") {
     $id = null;
     $personClassObj->loadPerson($connObj,$id);
 } else {
